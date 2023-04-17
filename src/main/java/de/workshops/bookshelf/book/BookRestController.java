@@ -48,6 +48,12 @@ public class BookRestController {
         return service.searchBooks(searchRequest);
     }
 
+    @PostMapping
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+//        var createdBook = service.createBook(book);
+        return ResponseEntity.ok(book);
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     ResponseEntity<String> handleConstraintViolations(ConstraintViolationException e) {
         return ResponseEntity.unprocessableEntity().body(e.getMessage());
