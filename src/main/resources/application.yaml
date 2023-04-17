@@ -1,0 +1,15 @@
+application:
+  title: '@project.name@'
+  version: '@project.version@'
+logging:
+  level:
+    org.springframework.boot.devtools: warn
+springdoc:
+  api-docs:
+    enabled: false
+server:
+  port: 8080
+
+bookshelf:
+  number-books: 1000
+  owner: Birgit

@@ -2,10 +2,14 @@ package de.workshops.bookshelf.book;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.workshops.bookshelf.ObjectMapperTestConfiguration;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,7 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(ObjectMapperTestConfiguration.class)
 class BookRestControllerMockMvcTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookRestControllerMockMvcTest.class);
 
     @Autowired
     MockMvc mockMvc;
@@ -36,6 +43,8 @@ class BookRestControllerMockMvcTest {
 
         List<Book> books = mapper.readValue(payload, new TypeReference<>() {
         });
+
+        LOGGER.info(mapper.writeValueAsString(books));
 
         assertThat(books).hasSize(3);
     }
@@ -60,5 +69,4 @@ class BookRestControllerMockMvcTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
-
 }
