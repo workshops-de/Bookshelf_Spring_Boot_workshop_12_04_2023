@@ -21,9 +21,15 @@ import java.util.List;
 @Validated
 public class BookRestController {
 
-    private final BookService service;
+    //    private final BookService service;
+//
+//    public BookRestController(BookService service) {
+//        this.service = service;
+//    }
+//
+    private final BookServiceUsingJpaRepository service;
 
-    public BookRestController(BookService service) {
+    public BookRestController(BookServiceUsingJpaRepository service) {
         this.service = service;
     }
 
@@ -50,8 +56,8 @@ public class BookRestController {
 
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
-//        var createdBook = service.createBook(book);
-        return ResponseEntity.ok(book);
+        var createdBook = service.createBook(book);
+        return ResponseEntity.ok(createdBook);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

@@ -6,9 +6,14 @@ import java.util.List;
 
 @Service
 public class BookService {
-    private final BookRepository repository;
+//    private final BookRepository repository;
+//
+//    public BookService(BookRepository repository) {
+//        this.repository = repository;
+//    }
+    private final BookJdbcRepository repository;
 
-    public BookService(BookRepository repository) {
+    public BookService(BookJdbcRepository repository) {
         this.repository = repository;
     }
 
@@ -35,5 +40,10 @@ public class BookService {
                 .filter(book -> book.getAuthor().contains(searchRequest.author())
                         || book.getTitle().contains(searchRequest.title()))
                 .toList();
+    }
+
+    Book createBook(Book book) {
+        repository.saveBook(book);
+        return book;
     }
 }
